@@ -1,0 +1,61 @@
+# Lab3-
+CCSW 413 Lab 3: Java Prototype Design Pattern Lab
+// Interface representing prototypes for document templates
+interface DocumentTemplate extends Cloneable {
+    DocumentTemplate clone();  
+    void customize(String content, String layout, String styles); // Method to customize document attributes
+
+
+// Implementation of the Prototype pattern for representing documents
+class Document implements DocumentTemplate {
+    private String content;
+    private String layout;
+    private String styles;
+
+   // Constructor for initializing document attributes
+    public Document(String content, String layout, String styles) {
+        this.content = content;
+        this.layout = layout;
+        this.styles = styles;
+    }
+
+    @Override
+    public DocumentTemplate clone() {
+        try {
+            return (DocumentTemplate) super.clone();  
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void customize(String content, String layout, String styles) {
+        // Customize the document with new attributes
+        this.content = content;
+        this.layout = layout;
+        this.styles = styles;
+        System.out.println("______________________________________________________________________________________");
+        System.out.println("-- The Content : " + content + "|  The Layout: " + layout + "| The Styles: " + styles);
+        
+    }
+    // Add methods to change the content, layout, and styles of the document here
+}
+
+// Client class responsible for the document generation system
+public class DocumentSystem {
+    public static void main(String[] args) {
+       // Create a prototype for document templates
+        DocumentTemplate template = new Document("Default content", "Default layout", "Default styles");
+
+        // Clone the prototype for customization
+        DocumentTemplate document1 = template.clone();
+        document1.customize("Animals are beautiful", "Layout 1", "Styles 1");
+
+       //Clone the prototype for additional customization
+        DocumentTemplate document2 = template.clone();
+        document2.customize("Ocean is vast", "Layout 2", "Styles 2");
+
+        // Repeat the process for other documents
+    }
+}
