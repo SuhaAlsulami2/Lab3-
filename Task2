@@ -1,0 +1,62 @@
+// Prototype Interface representing The level templates
+interface LevelTemplate extends Cloneable {
+    LevelTemplate clone();
+    void customize(String terrain, String obstacles, String enemies);
+}
+
+// Concrete implementation of the Prototype pattern for representing levels
+class Level implements LevelTemplate {
+    private String terrain;
+    private String obstacles;
+    private String enemies;
+
+  // Constructor to assign initial attributes to a level
+    public Level(String terrain, String obstacles, String enemies) {
+        this.terrain = terrain;
+        this.obstacles = obstacles;
+        this.enemies = enemies;
+    }
+
+    // Method to clone the level
+    @Override
+    public LevelTemplate clone() {
+        try {
+            return (LevelTemplate) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+ // Method to customize the level's attributes
+    @Override
+    public void customize(String terrain, String obstacles, String enemies) {
+        this.terrain = terrain;
+        this.obstacles = obstacles;
+        this.enemies = enemies;
+    
+        System.out.println("-- Terrain: " + terrain + "| Obstacles: " + obstacles + "| Enemies: " + enemies);
+      
+    }
+
+   // Methods for getting and setting terrain, obstacles, and enemies
+
+}
+
+// Client class for the level design tool
+public class LevelTool {
+    public static void main(String[] args) {
+        // Create a prototype level template
+        LevelTemplate levelTemplate = new Level("Default terrain", "Default obstacles", "Default enemies");
+
+        // Clone the prototype and customize the level
+        LevelTemplate level1 = levelTemplate.clone();
+        level1.customize("Buildings", "Walls", "Zombies");
+
+        // Clone the prototype for another customization
+        LevelTemplate level2 = levelTemplate.clone();
+        level2.customize("House", "Doors", "Vampires");
+
+        // Repeat the process for other levels
+    }
+}
